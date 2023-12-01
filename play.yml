@@ -1,0 +1,32 @@
+- name: static playbook
+  hosts: all
+  become: yes
+  tasks:
+    - name: apt update
+      apt:
+        update_cache: yes
+
+    - name: install nginx
+      apt:
+        name: nginx
+        state: latest
+    - name: git clone my repository
+      git:
+        repo: https://github.com/Syd25/GameBoxStatic.git
+        dest: /home/azureuser/myproject
+    - name: copy myproject to nginx (/var/www/html)
+      shell: 
+        cmd: cp -r myproject/* /var/www/html
+    - name: restat nginx
+      service:
+        name: nginx 
+        state: restarted
+
+
+
+      
+         
+        
+
+
+
